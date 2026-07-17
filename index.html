@@ -9,29 +9,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0d12;
-  --bg2:#12151d;
-  --panel:#161a24;
-  --line:#242a38;
+  --bg:#0b0d10;
+  --bg2:#13161a;
+  --panel:#181b20;
+  --line:#2a2e35;
   --ink:#e8ecf5;
   --ink-dim:#8891a5;
   --orange:#ff6a1a;
   --orange2:#ffab5c;
-  --red:#ff4655;
+  --red:#da2c38;
+  --red2:#ff4655;
   --common:#9aa3b4;
   --rare:#4fa3ff;
   --epic:#b168ff;
-  --legendary:#ff9c1a;
+  --legendary:#ffb833;
   --boss:#ff3d55;
+}
+.hex{
+  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
 }
 *{box-sizing:border-box; margin:0; padding:0;}
 html,body{background:var(--bg); color:var(--ink); font-family:'Chakra Petch',sans-serif;}
 body{
   min-height:100vh;
   background:
-    radial-gradient(circle at 15% 0%, rgba(255,106,26,0.10), transparent 40%),
-    radial-gradient(circle at 90% 10%, rgba(255,70,85,0.10), transparent 45%),
+    radial-gradient(circle at 15% 0%, var(--themeA, rgba(255,106,26,0.10)), transparent 40%),
+    radial-gradient(circle at 90% 10%, var(--themeB, rgba(255,70,85,0.10)), transparent 45%),
     linear-gradient(180deg, var(--bg) 0%, #0d0f16 100%);
+  transition: background 0.6s ease;
 }
 .wrap{max-width:1180px; margin:0 auto; padding:20px 16px 80px;}
 
@@ -40,7 +45,8 @@ body{
   position:relative;
   border:1px solid var(--line);
   background:linear-gradient(135deg, #171a24, #0e1017 70%);
-  border-radius:14px;
+  border-radius:2px;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 22px 100%, 0 calc(100% - 22px));
   padding:26px 22px;
   overflow:hidden;
   margin-bottom:18px;
@@ -67,7 +73,7 @@ body{
   letter-spacing:.01em;
   line-height:1.05;
   margin:6px 0 10px;
-  background:linear-gradient(90deg,#fff, var(--orange2) 70%);
+  background:linear-gradient(90deg,#fff, var(--red2) 70%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .hero p{color:var(--ink-dim); max-width:640px; font-size:14.5px; line-height:1.55;}
@@ -80,7 +86,12 @@ body{
   background:var(--panel); border:1px solid var(--line); border-radius:10px;
   padding:8px 14px;
 }
-.rank-chip .ricon{width:26px; height:26px; flex:none;}
+.rank-chip .riconWrap{
+  width:36px; height:36px; flex:none; display:flex; align-items:center; justify-content:center;
+  background:var(--bg2); border:1px solid var(--red);
+  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+}
+.rank-chip .ricon{width:22px; height:22px; flex:none;}
 .rank-chip .rname{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px;}
 .rank-chip .rsub{font-size:11px; color:var(--ink-dim);}
 .progress-outer{
@@ -90,7 +101,7 @@ body{
 }
 .progress-inner{
   height:100%;
-  background:linear-gradient(90deg, var(--orange), var(--red));
+  background:linear-gradient(90deg, var(--red), var(--orange));
   width:0%; transition:width .5s ease;
 }
 .progress-label{
@@ -115,13 +126,14 @@ body{
 .tab{
   font-family:'Rajdhani',sans-serif; font-weight:600; font-size:13px; letter-spacing:.03em;
   background:var(--panel); border:1px solid var(--line); color:var(--ink-dim);
-  padding:9px 14px; border-radius:9px; cursor:pointer; user-select:none;
+  padding:9px 14px; cursor:pointer; user-select:none;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
   transition:all .15s ease; white-space:nowrap;
 }
 .tab:hover{color:var(--ink); border-color:#3a4257;}
 .tab.active{
   color:#fff; border-color:transparent;
-  background:linear-gradient(90deg, var(--orange), var(--red));
+  background:linear-gradient(90deg, var(--red), var(--orange));
 }
 
 /* ---------- ZONE HEADER ---------- */
@@ -137,15 +149,20 @@ body{
 
 /* ---------- GRID / CARDS ---------- */
 .grid{
-  display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:10px;
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(168px,1fr)); gap:12px;
 }
 .card{
   position:relative;
-  background:var(--panel); border:1px solid var(--line); border-radius:10px;
-  padding:12px 12px 10px; cursor:pointer; overflow:hidden;
-  transition:transform .12s ease, border-color .12s ease;
+  background:var(--panel); border:1px solid var(--line); border-radius:2px;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  padding:14px 14px 12px; cursor:pointer; overflow:hidden;
+  transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
 }
-.card:hover{transform:translateY(-2px); border-color:var(--rc,var(--orange));}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:var(--rc,var(--orange));
+  box-shadow:0 6px 24px -6px var(--rc, rgba(255,106,26,0.35));
+}
 .card::before{
   content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
   background:var(--rc,var(--common));
@@ -205,7 +222,7 @@ body{
   transition:opacity .15s ease;
 }
 .btn:hover{opacity:.88;}
-.btn.primary{background:linear-gradient(90deg,var(--orange),var(--red)); color:#fff;}
+.btn.primary{background:linear-gradient(90deg,var(--red),var(--orange)); color:#fff;}
 .btn.ghost{background:var(--panel); color:var(--ink-dim); border:1px solid var(--line); flex:none;}
 .closeX{
   position:absolute; top:14px; right:14px; background:none; border:none; color:var(--ink-dim);
@@ -309,7 +326,8 @@ footer b{color:var(--orange2);}
 /* ---------- LOADOUT / INVENTAIRE ---------- */
 .loadout{display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; align-items:center;}
 .loadout-item{
-  width:38px; height:38px; border-radius:9px; border:1px solid var(--line);
+  width:38px; height:38px; border:1px solid var(--line);
+  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
   background:var(--panel); display:flex; align-items:center; justify-content:center;
   font-size:17px; cursor:pointer; position:relative;
 }
@@ -325,7 +343,11 @@ footer b{color:var(--orange2);}
   border:1px solid var(--line); border-radius:10px; padding:14px; text-align:center; background:var(--panel);
 }
 .invCard.locked{opacity:.35; filter:grayscale(1);}
-.invCard .invIcon{font-size:28px; margin-bottom:8px;}
+.invCard .invIcon{
+  font-size:24px; margin-bottom:8px; width:52px; height:52px; margin-left:auto; margin-right:auto;
+  display:flex; align-items:center; justify-content:center; background:var(--bg2); border:1px solid var(--line);
+  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+}
 .invCard .invName{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:13px; color:#fff;}
 .invCard .invReq{font-size:10.5px; color:var(--ink-dim); margin-top:4px;}
 
@@ -422,20 +444,298 @@ footer b{color:var(--orange2);}
   to{ transform:translateY(420px) rotate(540deg); opacity:0; }
 }
 
+/* ---------- FICHE DE RÉVISION ---------- */
+.ficheStamp{
+  position:absolute; top:18px; right:50px; font-family:'Rajdhani',sans-serif; font-weight:700;
+  font-size:11px; letter-spacing:.12em; color:#3ddc8c; border:1.5px solid #3ddc8c; border-radius:5px;
+  padding:3px 8px; transform:rotate(6deg); opacity:.85;
+}
+.ficheTrophyLine{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:14px; color:var(--orange2);
+  margin-bottom:14px;
+}
+.ficheCode{
+  background:#0a0c12; border:1px solid var(--line); border-radius:8px; padding:10px 12px;
+  font-family:monospace; font-size:12px; line-height:1.7;
+}
+.ficheCode .fcLine{color:#e8ecf5; white-space:pre-wrap;}
+.ficheCode .fcWhy{color:var(--ink-dim); font-style:italic; font-size:11px; padding-bottom:6px;}
+
+/* ---------- PRECISION HERO BUTTON ---------- */
+.precisionOpenBtn{
+  margin-top:12px; background:var(--panel); border:1px solid #3a4257; color:var(--ink);
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:12.5px; padding:9px 14px;
+}
+.precisionOpenBtn:hover{border-color:var(--orange); color:var(--orange2);}
+
+/* ---------- PRECISION MINI-GAME ---------- */
+.precisionModal{max-width:420px; text-align:center;}
+.precisionIntro{color:var(--ink-dim); font-size:13px; margin-bottom:14px; line-height:1.5;}
+.precisionArena{
+  position:relative; width:100%; height:260px; background:#060708; border:1px solid #1f2430;
+  border-radius:10px; overflow:hidden; margin-bottom:14px;
+}
+.precisionScoreHud{
+  position:absolute; top:8px; left:0; right:0; text-align:center; font-family:'Rajdhani',sans-serif;
+  font-weight:700; font-size:12px; color:#7dffb0; z-index:2;
+}
+.precisionTarget{
+  position:absolute; width:40px; height:40px; border-radius:50%;
+  background:radial-gradient(circle, #ff6a1a 0%, #ff4655 70%); border:2px solid #fff2;
+  display:flex; align-items:center; justify-content:center; font-size:18px; cursor:crosshair;
+  animation:targetPop .15s ease;
+}
+@keyframes targetPop{from{transform:scale(0);} to{transform:scale(1);}}
+.precisionResult{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; color:var(--orange2); margin-bottom:12px;}
+
+/* ---------- URBEX SECRET ROOM ---------- */
+.urbexModal{max-width:440px; background:linear-gradient(160deg,#141610,#0c0d0a); border-color:#3ddc8c;}
+.urbexTitle{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:19px; color:#7dffb0;
+  letter-spacing:.04em; margin-bottom:12px;
+}
+.urbexText{font-size:13px; color:var(--ink-dim); line-height:1.6; margin-bottom:16px;}
+.urbexStatsGrid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;}
+.urbexStat{background:rgba(61,220,140,0.06); border:1px solid #2c5c42; border-radius:8px; padding:10px; text-align:center;}
+.urbexStat .uVal{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:20px; color:#7dffb0;}
+.urbexStat .uLabel{font-size:10.5px; color:var(--ink-dim); margin-top:2px;}
+.urbexFooter{font-size:12px; color:var(--ink-dim); font-style:italic; margin-bottom:14px;}
+
+/* ---------- BUDDY MASCOTTE ---------- */
+.buddy{
+  position:fixed; bottom:16px; right:16px; z-index:60; display:flex; align-items:flex-end; gap:8px;
+  max-width:min(300px, calc(100vw - 32px)); pointer-events:none;
+}
+.buddyIcon{
+  width:40px; height:40px; border-radius:50%; background:var(--panel); border:1px solid var(--orange);
+  display:flex; align-items:center; justify-content:center; font-size:20px; flex:none;
+  pointer-events:auto; cursor:pointer;
+}
+.buddyBubble{
+  background:var(--bg2); border:1px solid var(--line); border-radius:10px 10px 10px 2px;
+  padding:8px 12px; font-size:12px; line-height:1.4; color:var(--ink); box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+@media (max-width:520px){ .buddy{ bottom:10px; right:10px; max-width:calc(100vw - 20px);} .buddyBubble{font-size:11px;} }
+
+/* ---------- STICKY HUD (façon barre de statut Apex) ---------- */
+.stickyHud{
+  position:sticky; top:0; z-index:40; background:rgba(10,11,15,0.92); backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--line); padding:8px 16px;
+}
+.stickyHudInner{
+  max-width:1180px; margin:0 auto; display:flex; align-items:center; gap:12px;
+}
+.stickyHudRank{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:.08em;
+  color:var(--orange2); flex:none;
+}
+.stickyHudBarOuter{
+  flex:1; height:6px; background:var(--bg2); border-radius:3px; overflow:hidden; border:1px solid var(--line);
+}
+.stickyHudBarInner{
+  height:100%; width:0%; background:linear-gradient(90deg,var(--red),var(--orange)); transition:width .5s ease;
+}
+.stickyHudXp{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:11.5px; color:var(--ink-dim); flex:none;
+}
+
+/* ---------- EASTER EGG ---------- */
+.eggModal{max-width:380px; text-align:center; border-color:var(--legendary);}
+.eggIcon{font-size:48px; margin-bottom:8px;}
+.eggTitle{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:20px; color:var(--legendary); margin-bottom:10px;
+}
+.eggText{font-size:13.5px; color:var(--ink); line-height:1.6;}
+
+/* ---------- CUTSCENE INTRO ---------- */
+.cutsceneOverlay{
+  position:fixed; inset:0; z-index:200; display:flex; align-items:center; justify-content:center;
+  background:#020304; padding:20px;
+}
+.cutsceneOverlay.hidden{display:none;}
+.cutsceneBg{
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(180deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 4px),
+    radial-gradient(circle at 50% 30%, rgba(218,44,56,0.10), transparent 55%);
+  animation:scan 6s linear infinite;
+}
+@keyframes scan{ from{background-position:0 0, 0 0;} to{background-position:0 40px, 0 0;} }
+.cutsceneBox{
+  position:relative; max-width:560px; width:100%; text-align:left;
+}
+.cutsceneEyebrow{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:12px; letter-spacing:.25em;
+  color:var(--red2); margin-bottom:16px; animation:blink 1.4s step-start infinite;
+}
+.cutsceneText{
+  font-family:'Chakra Petch',sans-serif; font-size:16px; line-height:1.75; color:var(--ink);
+  min-height:180px;
+}
+.cutsceneText b{color:#fff;}
+.cutsceneProgress{display:flex; gap:6px; margin:22px 0 14px;}
+.cutsceneProgress .dot{width:26px; height:4px; background:var(--line); border-radius:2px;}
+.cutsceneProgress .dot.on{background:var(--red2);}
+.cutsceneBtns{display:flex; align-items:center; justify-content:space-between; gap:14px;}
+.cutsceneSkip{font-size:12px; color:var(--ink-dim); text-decoration:underline; cursor:pointer;}
+.cutsceneSkip:hover{color:var(--ink);}
+
+/* ---------- STORY BEATS (fin de chapitre) ---------- */
+.storyModal{
+  max-width:440px; text-align:center; border-color:var(--red2);
+  background:linear-gradient(160deg,#171a24,#0d1017);
+}
+.storyEyebrow{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:11px; letter-spacing:.18em;
+  color:var(--red2); margin-bottom:10px;
+}
+.storyIcon{font-size:44px; margin-bottom:10px;}
+.storyText{font-size:14px; line-height:1.7; color:var(--ink); margin-bottom:20px; text-align:left;}
+
+/* ---------- STORY MAP ---------- */
+.storyMapModal{max-width:640px;}
+.storyMapIntro{color:var(--ink-dim); font-size:13px; margin-bottom:18px; line-height:1.5;}
+.mapGrid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+.mapNode{
+  position:relative; background:var(--panel); border:1px solid var(--line); border-radius:2px;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  padding:16px 12px; text-align:center; cursor:pointer; transition:all .15s ease;
+}
+.mapNode:hover{border-color:var(--red2); transform:translateY(-2px);}
+.mapNode.locked{opacity:.4; cursor:default; filter:grayscale(1);}
+.mapNode.locked:hover{transform:none; border-color:var(--line);}
+.mapNode .mnIcon{font-size:26px; margin-bottom:6px;}
+.mapNode .mnName{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:12px; color:#fff;}
+.mapNode .mnStatus{font-size:10px; color:var(--ink-dim); margin-top:3px;}
+.mapNode.secret{border-color:#3ddc8c;}
+.mapDetail{padding-top:6px;}
+.mapBack{
+  background:none; border:none; color:var(--ink-dim); font-size:12px; cursor:pointer;
+  text-decoration:underline; margin-bottom:14px;
+}
+.mapBack:hover{color:var(--ink);}
+
+/* ---------- MINI-JEU : DISTRIBUTEUR KOBÉ ---------- */
+.vendingGame{background:#0a0c12; border:1px solid var(--line); border-radius:8px; padding:16px; margin-top:6px;}
+.vendingRow{display:flex; gap:8px; margin-bottom:10px;}
+.vendingInput{
+  width:44px; height:44px; text-align:center; font-size:18px; font-family:monospace;
+  background:var(--panel); border:1px solid var(--line); border-radius:6px; color:#fff;
+}
+.vendingInput:focus{outline:none; border-color:var(--red2);}
+.vendingFeedback{font-size:12.5px; color:var(--ink-dim); min-height:36px; line-height:1.5;}
+.vendingWin{color:#7dffb0; font-weight:700;}
+
+/* ---------- MINI-JEU : SAUVETAGE CHATONS ---------- */
+.kittenGrid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px;}
+.vent{
+  aspect-ratio:1; background:#0a0c12; border:1px solid var(--line); border-radius:6px;
+  display:flex; align-items:center; justify-content:center; font-size:22px; cursor:pointer;
+}
+.vent.found{background:rgba(61,220,140,0.12); border-color:#3ddc8c; cursor:default;}
+.vent.empty{cursor:default; opacity:.5;}
+.kittenCount{font-family:'Rajdhani',sans-serif; font-weight:700; color:var(--orange2); margin-top:10px; font-size:13px;}
+
+/* ---------- DÉFENSE TACTIQUE (jeu vidéo) ---------- */
+.tacticalModal{max-width:640px; text-align:center;}
+.tacticalIntro{color:var(--ink-dim); font-size:13px; line-height:1.6; margin:14px 0 18px;}
+.tacticalBest{margin-top:14px; font-size:12px; color:var(--ink-dim);}
+.tacticalHud{
+  display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:14px; color:var(--ink);
+}
+#tacticalCanvas{
+  width:100%; max-width:600px; aspect-ratio:600/380; background:#05070a; border:1px solid #1f2430;
+  border-radius:8px; cursor:crosshair; touch-action:none;
+}
+.tacticalDefuse{
+  background:#1a0d0f; border:1px solid var(--red2); border-radius:10px; padding:18px; margin-top:4px;
+}
+.defuseTitle{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:15px; color:#ff8b96; margin-bottom:12px;
+}
+.defuseCall{
+  font-family:monospace; font-size:13px; background:#0a0c12; border-radius:7px; padding:10px 12px;
+  margin-bottom:12px; color:var(--ink);
+}
+.defuseOpts{display:flex; flex-direction:column; gap:8px;}
+.tacticalEnd{padding:10px;}
+.tacticalEndTitle{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:22px; color:var(--orange2); margin-bottom:8px;}
+.tacticalEndScore{font-size:14px; color:var(--ink-dim); margin-bottom:18px;}
+
+/* ---------- AUTH SCREEN ---------- */
+.authOverlay{
+  position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255,106,26,0.12), transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(255,70,85,0.12), transparent 45%),
+    var(--bg);
+  padding:16px;
+}
+.authOverlay.hidden{display:none;}
+.authCard{
+  width:100%; max-width:360px; background:var(--bg2); border:1px solid var(--line);
+  border-radius:14px; padding:28px 26px;
+}
+.authCard h2{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:28px; margin:6px 0 18px;
+  background:linear-gradient(90deg,#fff, var(--red2) 70%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.authTabs{display:flex; gap:6px; margin-bottom:16px; border-bottom:1px solid var(--line);}
+.authTab{
+  flex:1; background:none; border:none; color:var(--ink-dim); font-family:'Rajdhani',sans-serif;
+  font-weight:700; font-size:13px; padding:10px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px;
+}
+.authTab.active{color:var(--orange2); border-bottom-color:var(--orange);}
+.authInput{
+  width:100%; background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  padding:11px 13px; color:var(--ink); font-family:'Chakra Petch',sans-serif; font-size:14px; margin-bottom:10px;
+}
+.authInput:focus{outline:none; border-color:var(--orange);}
+.authSubmit{width:100%; margin-top:4px;}
+.authError{color:#ff8b96; font-size:12.5px; margin-top:10px; min-height:16px;}
+.authSkip{margin-top:16px; text-align:center; font-size:12px; color:var(--ink-dim); text-decoration:underline; cursor:pointer;}
+.authSkip:hover{color:var(--ink);}
+.accountBar{
+  display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--ink-dim); margin-top:10px;
+}
+.accountBar b{color:var(--orange2);}
+.accountBar span.logoutLink{text-decoration:underline; cursor:pointer;}
+.accountBar span.logoutLink:hover{color:var(--ink);}
 
 </style>
 </head>
 <body>
+<div class="cutsceneOverlay" id="cutsceneOverlay">
+  <div class="cutsceneBg"></div>
+  <div class="cutsceneBox">
+    <div class="cutsceneEyebrow" id="cutsceneEyebrow">TRANSMISSION ENTRANTE...</div>
+    <div class="cutsceneText" id="cutsceneText"></div>
+    <div class="cutsceneProgress" id="cutsceneProgress"></div>
+    <div class="cutsceneBtns">
+      <span class="cutsceneSkip" id="cutsceneSkip">passer l'intro</span>
+      <button class="btn primary" id="cutsceneNext">Suivant ➜</button>
+    </div>
+  </div>
+</div>
+<div class="stickyHud" id="stickyHud">
+  <div class="stickyHudInner">
+    <span class="stickyHudRank" id="stickyHudRank">FER</span>
+    <div class="stickyHudBarOuter"><div class="stickyHudBarInner" id="stickyHudBarInner"></div></div>
+    <span class="stickyHudXp" id="stickyHudXp">0 XP</span>
+  </div>
+</div>
 <div class="wrap">
 
   <div class="hero">
     <div class="eyebrow">ZONE01 ROUEN · GO PISCINE</div>
     <h1>PISCINE // RANKED</h1>
-    <p>5 semaines de quêtes, 120 missions, zéro tolérance pour l'ennui. Tu piges le brief, tu assembles le vrai code Go à la main, tu valides en Round d'entraînement. Tout est débloqué direct — pas de mur, juste toi contre le compilateur (le compilateur gagne souvent, c'est normal, c'est la vie). Chaque victoire rapporte de l'XP et débloque des items du casier.</p>
+    <p><b style="color:#fff;">SAISON 1 — DROP EN COURS.</b> T'as spawn dans l'Arène Go. 5 chapitres, 120 missions, un stand de tir, un casier à remplir et une Zone Interdite planquée quelque part pour ceux qui font le tour complet. Aucune zone verrouillée, aucun mur — juste toi, ton squad (tes potes), et le compilateur en face (qui gagne souvent, c'est normal, c'est la vie). Chaque victoire = XP + loot.</p>
 
     <div class="statbar">
       <div class="rank-chip">
-        <svg class="ricon" id="rankIcon" viewBox="0 0 24 24"></svg>
+        <div class="riconWrap"><svg class="ricon" id="rankIcon" viewBox="0 0 24 24"></svg></div>
         <div>
           <div class="rname" id="rankName">FER</div>
           <div class="rsub" id="rankSub">0 / 120 compris</div>
@@ -452,6 +752,10 @@ footer b{color:var(--orange2);}
     </div>
 
     <div class="loadout" id="loadout"></div>
+    <button class="btn precisionOpenBtn" id="precisionOpenBtn">🎯 Stand de tir — Zone d'entraînement</button>
+    <button class="btn precisionOpenBtn" id="storyMapOpenBtn">🗺️ Mode Histoire — Carte du complexe</button>
+    <button class="btn precisionOpenBtn" id="tacticalOpenBtn" style="border-color:var(--red2);color:#ff9aa4;">🔫 DÉFENSE TACTIQUE — Jeu vidéo</button>
+    <div class="accountBar" id="accountBar"></div>
   </div>
 
   <div class="controls">
@@ -546,8 +850,130 @@ footer b{color:var(--orange2);}
   <div class="modal" id="trophyModal">
     <button class="closeX" id="trophyCloseX">✕</button>
     <h3>🏅 Trophées</h3>
-    <p style="color:var(--ink-dim);font-size:13px;margin-bottom:14px;">Un trophée par mission clean-clear (code assemblé + Round validé). Full random, full inutile, full satisfaisant.</p>
+    <p style="color:var(--ink-dim);font-size:13px;margin-bottom:14px;">Un trophée par mission clean-clear (code assemblé + Round validé). Clique un trophée débloqué pour revoir sa fiche de révision.</p>
     <div class="invGrid" id="trophyGrid"></div>
+  </div>
+</div>
+
+<div class="overlay" id="ficheOverlay">
+  <div class="modal" id="ficheModal">
+    <button class="closeX" id="ficheCloseX">✕</button>
+    <div class="ficheStamp">MISSION ARCHIVÉE</div>
+    <div class="mtag" id="ficheTag"></div>
+    <h3 id="ficheTitle"></h3>
+    <div class="ficheTrophyLine" id="ficheTrophyLine"></div>
+
+    <div class="mBlockLabel">📋 Ce que t'as capté</div>
+    <div class="quoi" id="ficheQuoi"></div>
+
+    <div class="chiprow" id="ficheConceptRow" style="display:none;">
+      <span class="concept-chip" id="ficheConcept"></span>
+    </div>
+
+    <div class="mBlockLabel">🎯 Plan de tactique</div>
+    <div class="strat" id="ficheStrat"></div>
+
+    <div class="mBlockLabel">💻 Le code, ligne par ligne</div>
+    <div class="ficheCode" id="ficheCode"></div>
+  </div>
+</div>
+
+<div class="overlay" id="precisionOverlay">
+  <div class="modal precisionModal" id="precisionModal">
+    <button class="closeX" id="precisionCloseX">✕</button>
+    <h3>🎯 Stand de tir</h3>
+    <p class="precisionIntro" id="precisionIntro">Chaque Legend a son stand d'entraînement entre deux drops. 6 cibles, vise juste, vise vite. Ta précision ici, c'est la même que celle qui te sert à repérer le bug dans le code.</p>
+    <div class="precisionArena" id="precisionArena">
+      <div class="precisionScoreHud" id="precisionScoreHud" style="display:none;">Round <span id="precisionRound">0</span>/6 · Score <span id="precisionScoreLive">0</span></div>
+    </div>
+    <div class="precisionResult" id="precisionResult" style="display:none;"></div>
+    <button class="btn primary" id="precisionStartBtn">▶ Lancer le calibrage</button>
+  </div>
+</div>
+
+<div class="overlay" id="urbexOverlay">
+  <div class="modal urbexModal" id="urbexModal">
+    <button class="closeX" id="urbexCloseX">✕</button>
+    <div class="urbexTitle">🏚️ ZONE INTERDITE — ACCÈS DÉBLOQUÉ</div>
+    <p class="urbexText">100% de la piscine explorée. T'as fait ce que la plupart des piscineux abandonnent à mi-chemin. Derrière cette porte rouillée qui n'ouvre qu'aux complets :</p>
+    <div class="urbexStatsGrid" id="urbexStatsGrid"></div>
+    <p class="urbexFooter">Bon, y'a pas vraiment de trésor caché ici, juste des stats et un GG bien mérité. Mais avoue que ça fait son effet.</p>
+    <button class="btn primary" id="urbexCloseBtn">Fermer la zone</button>
+  </div>
+</div>
+
+<div class="overlay" id="storyOverlay">
+  <div class="modal storyModal" id="storyModal">
+    <div class="storyEyebrow" id="storyEyebrow">TRANSMISSION — CHAPITRE 1 TERMINÉ</div>
+    <div class="storyIcon" id="storyIcon">📡</div>
+    <div class="storyText" id="storyText"></div>
+    <button class="btn primary" id="storyCloseBtn">Continuer l'exploration ➜</button>
+  </div>
+</div>
+
+<div class="overlay" id="storyMapOverlay">
+  <div class="modal storyMapModal" id="storyMapModal">
+    <button class="closeX" id="storyMapCloseX">✕</button>
+    <h3>🗺️ Mode Histoire — Carte du complexe</h3>
+    <p class="storyMapIntro">Chaque salle se débloque en avançant dans les chapitres correspondants (rien à débloquer à part la suite de l'histoire). Clique une salle explorée pour revoir ce que t'as trouvé — et parfois, y'a un truc à faire dedans.</p>
+
+    <div class="mapGrid" id="mapGrid"></div>
+
+    <div class="mapDetail" id="mapDetail" style="display:none;">
+      <button class="mapBack" id="mapBack">← retour à la carte</button>
+      <div class="storyEyebrow" id="mapDetailEyebrow"></div>
+      <div class="storyIcon" id="mapDetailIcon"></div>
+      <div class="storyText" id="mapDetailText"></div>
+      <div id="mapDetailGame"></div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="tacticalOverlay">
+  <div class="modal tacticalModal" id="tacticalModal">
+    <button class="closeX" id="tacticalCloseX">✕</button>
+
+    <div id="tacticalStart">
+      <h3>🔫 Défense Tactique</h3>
+      <p class="tacticalIntro">Des bots corrompus foncent sur le terminal central. Clique-les avant qu'ils arrivent. Toutes les 3 vagues, faut désamorcer un fragment de code sous pression avant l'explosion — comme un spike. Le terminal a 5 PV. Bonne chance, TDC.</p>
+      <button class="btn primary" id="tacticalStartBtn">▶ Lancer la défense</button>
+      <div class="tacticalBest" id="tacticalBest"></div>
+    </div>
+
+    <div id="tacticalPlayWrap" style="display:none;">
+      <div class="tacticalHud">
+        <span id="tacticalWave">Vague 1</span>
+        <span id="tacticalHp">❤️❤️❤️❤️❤️</span>
+        <span id="tacticalScore">Score 0</span>
+      </div>
+      <canvas id="tacticalCanvas" width="600" height="380"></canvas>
+    </div>
+
+    <div id="tacticalDefuse" class="tacticalDefuse" style="display:none;">
+      <div class="defuseTitle">⚠️ DÉSAMORÇAGE — <span id="defuseTimer">8</span>s</div>
+      <div class="defuseCall" id="defuseCall"></div>
+      <div class="defuseOpts" id="defuseOpts"></div>
+    </div>
+
+    <div id="tacticalEnd" class="tacticalEnd" style="display:none;">
+      <div class="tacticalEndTitle" id="tacticalEndTitle"></div>
+      <div class="tacticalEndScore" id="tacticalEndScore"></div>
+      <button class="btn primary" id="tacticalReplayBtn">↺ Rejouer</button>
+    </div>
+  </div>
+</div>
+
+<div class="buddy" id="buddy">
+  <div class="buddyIcon">🐱‍👤</div>
+  <div class="buddyBubble" id="buddyBubble">Prêt·e pour la mission ?</div>
+</div>
+
+<div class="overlay" id="eggOverlay">
+  <div class="modal eggModal" id="eggModal">
+    <button class="closeX" id="eggCloseX">✕</button>
+    <div class="eggIcon" id="eggIcon">🥚</div>
+    <div class="eggTitle" id="eggTitle"></div>
+    <div class="eggText" id="eggText"></div>
   </div>
 </div>
 
@@ -558,7 +984,31 @@ footer b{color:var(--orange2);}
     <div class="victoryTitle">MISSION CLEAR</div>
     <div class="victoryTrophyName" id="victoryTrophyName"></div>
     <div class="victorySub" id="victorySub"></div>
-    <button class="btn primary" id="victoryClose">Nice ➜</button>
+    <button class="btn primary" id="victoryFiche" style="margin-bottom:8px;">📋 Voir la fiche de révision</button>
+    <button class="btn ghost2" id="victoryClose">Nice ➜</button>
+  </div>
+</div>
+
+<div class="authOverlay" id="authOverlay">
+  <div class="authCard">
+    <div class="eyebrow">ZONE01 ROUEN · GO PISCINE</div>
+    <h2>PISCINE // RANKED</h2>
+    <div class="authTabs">
+      <button class="authTab active" data-tab="login">Se connecter</button>
+      <button class="authTab" data-tab="signup">Créer un compte</button>
+    </div>
+    <div class="authPane" id="authPane-login">
+      <input class="authInput" id="loginUser" type="text" placeholder="Pseudo" autocomplete="username">
+      <input class="authInput" id="loginPass" type="password" placeholder="Mot de passe" autocomplete="current-password">
+      <button class="btn primary authSubmit" id="loginSubmit">Se connecter</button>
+    </div>
+    <div class="authPane" id="authPane-signup" style="display:none;">
+      <input class="authInput" id="signupUser" type="text" placeholder="Pseudo (3-20 caractères)" autocomplete="username">
+      <input class="authInput" id="signupPass" type="password" placeholder="Mot de passe (4 caractères min)" autocomplete="new-password">
+      <button class="btn primary authSubmit" id="signupSubmit">Créer mon compte</button>
+    </div>
+    <div class="authError" id="authError"></div>
+    <div class="authSkip"><span id="authSkip">jouer sans compte (progression restera coincée sur ce PC) →</span></div>
   </div>
 </div>
 
@@ -569,11 +1019,11 @@ footer b{color:var(--orange2);}
 var EX = JSON.parse(document.getElementById('exdata').textContent);
 
 var ZONES = {
-  1:{week:"SEMAINE 1", name:"ZONE D'ATTERRISSAGE", sub:"Les bases — le tout premier drop"},
-  2:{week:"SEMAINE 2", name:"LE QG", sub:"Arguments & ligne de commande"},
-  3:{week:"SEMAINE 3", name:"L'ATELIER DES STRINGS", sub:"Manipuler du texte"},
-  4:{week:"SEMAINE 4", name:"LE LABO DES NOMBRES", sub:"Maths, bases, pointeurs"},
-  5:{week:"SEMAINE 5", name:"LE REPAIRE DU BOSS", sub:"Tableaux, tri, fonctions avancées"}
+  1:{week:"CHAPITRE 1", name:"ZONE D'ATTERRISSAGE", sub:"Le tout premier drop — on apprend à courir avant de looter"},
+  2:{week:"CHAPITRE 2", name:"LE QG", sub:"Ton squad t'attend, ramasse ton loadout d'arguments"},
+  3:{week:"CHAPITRE 3", name:"L'ATELIER DES STRINGS", sub:"Zone dense, faut manier le texte comme une arme"},
+  4:{week:"CHAPITRE 4", name:"LE LABO DES NOMBRES", sub:"Terrain technique, précision exigée"},
+  5:{week:"CHAPITRE 5", name:"LE REPAIRE DU BOSS", sub:"Dernière zone avant la Zone Interdite. Bonne chance."}
 };
 var ZONE_ORDER = [1,2,3,4,5];
 
@@ -586,13 +1036,13 @@ var RANKS = {
 };
 
 var TIERS = [
-  {min:0,   name:"FER",     sub:"Tu viens de spawn", item:null},
-  {min:10,  name:"BRONZE",  sub:"Ça commence à rentrer", item:{icon:"🎖️", name:"Bannière Recrue"}},
-  {min:25,  name:"ARGENT",  sub:"Solide sur les bases", item:{icon:"🔮", name:"Charm Fantôme"}},
-  {min:45,  name:"OR",      sub:"Tu gères la moitié de la piscine", item:{icon:"🗡️", name:"Skin Arme Or"}},
-  {min:65,  name:"PLATINE", sub:"Sérieux niveau", item:{icon:"🏆", name:"Trophée Légendaire"}},
-  {min:85,  name:"DIAMANT", sub:"Presque full clear", item:{icon:"🎇", name:"Pack Emote Victoire"}},
-  {min:100, name:"RADIANT", sub:"Piscine 100% comprise", item:{icon:"👑", name:"Skin Radiant Ultime"}}
+  {min:0,   name:"FER",     sub:"Tu viens de spawn", item:null, theme:["rgba(154,163,180,0.12)","rgba(154,163,180,0.08)"]},
+  {min:10,  name:"BRONZE",  sub:"Ça commence à rentrer", item:{icon:"🎖️", name:"Bannière Recrue"}, theme:["rgba(180,120,60,0.14)","rgba(120,80,40,0.10)"]},
+  {min:25,  name:"ARGENT",  sub:"Solide sur les bases", item:{icon:"🥩", name:"Bœuf de Kobé Runé"}, theme:["rgba(180,190,210,0.14)","rgba(140,150,170,0.10)"]},
+  {min:45,  name:"OR",      sub:"Tu gères la moitié de la piscine", item:{icon:"🐱", name:"Chaton Tacticien"}, theme:["rgba(255,196,60,0.16)","rgba(255,150,40,0.10)"]},
+  {min:65,  name:"PLATINE", sub:"Sérieux niveau", item:{icon:"🎯", name:"Précision Chirurgicale"}, theme:["rgba(120,220,255,0.16)","rgba(80,160,255,0.10)"]},
+  {min:85,  name:"DIAMANT", sub:"Presque full clear", item:{icon:"🎇", name:"Pack Emote Victoire"}, theme:["rgba(150,120,255,0.18)","rgba(255,70,170,0.10)"]},
+  {min:100, name:"RADIANT", sub:"Piscine 100% explorée, comme un urbex réussi", item:{icon:"🏚️", name:"Clé de l'Exploration Finale"}, theme:["rgba(255,215,94,0.22)","rgba(255,106,26,0.16)"]}
 ];
 
 var STORAGE_KEY = "zone01_piscine_progress_v3";
@@ -626,22 +1076,22 @@ function saveCleared(){
 
 var TROPHIES = [
   {icon:"🍗", name:"Chicken Dinner Coder"},
-  {icon:"💎", name:"Diamond Debugger"},
+  {icon:"🥩", name:"Bœuf de Kobé Debuggé"},
   {icon:"🔥", name:"On Fire (zéro bug)"},
   {icon:"🧠", name:"200 IQ Play"},
   {icon:"🎯", name:"Headshot Logique"},
   {icon:"🚀", name:"Boosté comme un Octane"},
-  {icon:"🛡️", name:"Tank Incassable"},
+  {icon:"🐱", name:"Chaton Debuggeur Junior"},
   {icon:"⚡", name:"Vitesse Lumière"},
   {icon:"🏹", name:"Sniper de Syntaxe"},
-  {icon:"🎮", name:"GG EZ"},
+  {icon:"🎮", name:"GG EZ avec les Potes"},
   {icon:"🥇", name:"MVP de la Manche"},
   {icon:"🌪️", name:"Tornade de Code"},
   {icon:"🦾", name:"Bras Robotique"},
   {icon:"🔑", name:"Clé Maître"},
   {icon:"🃏", name:"Joker Inattendu"},
   {icon:"🐐", name:"Le GOAT"},
-  {icon:"🌟", name:"Star Montante"},
+  {icon:"🏚️", name:"Urbex du Terminal"},
   {icon:"🏴‍☠️", name:"Pirate du Terminal"},
   {icon:"🦅", name:"Œil de Faucon"},
   {icon:"💥", name:"Combo Explosif"}
@@ -688,8 +1138,8 @@ function currentTierIndex(p){
 }
 
 function shieldSVG(color){
-  return '<svg viewBox="0 0 24 24" width="26" height="26" xmlns="http://www.w3.org/2000/svg">' +
-    '<path d="M12 2 L21 5.5 V11 C21 16.5 17.2 20.7 12 22 C6.8 20.7 3 16.5 3 11 V5.5 Z" ' +
+  return '<svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg">' +
+    '<path d="M8 2 L16 2 L22 12 L16 22 L8 22 L2 12 Z" ' +
     'fill="' + color + '22" stroke="' + color + '" stroke-width="1.6" stroke-linejoin="round"/>' +
     '<path d="M8.2 12.2 L10.6 14.6 L15.8 9.2" fill="none" stroke="' + color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>' +
     '</svg>';
@@ -707,7 +1157,16 @@ function renderStat(){
   document.getElementById('xpVal').textContent = totalXP() + " / " + maxXP() + " XP";
   document.getElementById('progBar').style.width = p + "%";
   document.getElementById('progLabel').textContent = p + "%";
+  document.getElementById('stickyHudRank').textContent = tier.name;
+  document.getElementById('stickyHudBarInner').style.width = p + "%";
+  document.getElementById('stickyHudXp').textContent = totalXP() + " XP";
+  document.body.style.setProperty('--themeA', tier.theme[0]);
+  document.body.style.setProperty('--themeB', tier.theme[1]);
   renderLoadout(idx);
+  if(typeof maybeShowUrbex === 'function') maybeShowUrbex();
+  if(typeof maybeShowStoryBeat === 'function'){
+    for(var c=1;c<=5;c++) maybeShowStoryBeat(c);
+  }
 }
 
 function renderLoadout(unlockedIdx){
@@ -757,13 +1216,22 @@ function openTrophies(){
   EX.forEach(function(e){
     var isCleared = !!cleared[e.id];
     var t = trophyFor(e.id);
-    html += '<div class="invCard ' + (isCleared?'':'locked') + '">' +
+    html += '<div class="invCard ' + (isCleared?'':'locked') + '" data-id="'+e.id+'" style="'+(isCleared?'cursor:pointer;':'')+'">' +
       '<div class="invIcon">' + (isCleared ? t.icon : '🔒') + '</div>' +
       '<div class="invName">' + (isCleared ? t.name : '???') + '</div>' +
       '<div class="invReq">' + e.id + '</div>' +
       '</div>';
   });
   grid.innerHTML = html;
+  Array.prototype.forEach.call(grid.querySelectorAll('.invCard'), function(card){
+    var id = card.getAttribute('data-id');
+    if(cleared[id]){
+      card.addEventListener('click', function(){
+        document.getElementById('trophyOverlay').classList.remove('open');
+        openFiche(id);
+      });
+    }
+  });
   document.getElementById('trophyOverlay').classList.add('open');
 }
 document.getElementById('trophyCloseX').addEventListener('click', function(){
@@ -798,20 +1266,76 @@ function checkFullClear(id){
 }
 
 function showVictory(id){
+  activeVictoryId = id;
   var t = trophyFor(id);
   document.getElementById('victoryIcon').textContent = t.icon;
   document.getElementById('victoryTrophyName').textContent = t.name;
-  document.getElementById('victorySub').textContent = "Débloqué sur la mission « " + id + " » — code assemblé + Round validé. Clean sweep.";
+  var subs = [
+    "Débloqué sur « " + id + " » — code assemblé + Round validé. Clean sweep, précis comme un headshot.",
+    "Débloqué sur « " + id + " » — aussi satisfaisant qu'un bœuf de Kobé parfaitement cuit.",
+    "Débloqué sur « " + id + " » — t'as exploré ce code comme un urbex trouve la pièce secrète.",
+    "Débloqué sur « " + id + " » — GG, appelle tes potes pour leur montrer.",
+    "Débloqué sur « " + id + " » — plus mignon qu'un chaton, presque."
+  ];
+  document.getElementById('victorySub').textContent = pick(id, subs);
   spawnConfetti();
+  setBuddy(BUDDY_LINES.victory);
   document.getElementById('victoryOverlay').classList.add('open');
 }
 document.getElementById('victoryClose').addEventListener('click', function(){
   document.getElementById('victoryOverlay').classList.remove('open');
 });
 
+function openFiche(id){
+  var e = EX.find(function(x){return x.id === id;});
+  if(!e) return;
+  var r = RANKS[e.rank];
+  var t = trophyFor(id);
+  document.getElementById('ficheTag').textContent = r.label;
+  document.getElementById('ficheTag').style.color = r.color;
+  document.getElementById('ficheModal').style.setProperty('--rc', r.color);
+  document.getElementById('ficheTitle').textContent = id;
+  document.getElementById('ficheTrophyLine').textContent = t.icon + " Trophée obtenu : " + t.name;
+  document.getElementById('ficheQuoi').textContent = e.quoi;
+  document.getElementById('ficheStrat').textContent = e.strat;
+
+  var conceptRow = document.getElementById('ficheConceptRow');
+  if(e.concept){
+    document.getElementById('ficheConcept').textContent = "🧠 " + e.concept;
+    conceptRow.style.display = 'block';
+  } else {
+    conceptRow.style.display = 'none';
+  }
+
+  var codeBox = document.getElementById('ficheCode');
+  codeBox.innerHTML = '';
+  e.code.forEach(function(line){
+    var l = document.createElement('div');
+    l.className = 'fcLine';
+    l.textContent = line;
+    codeBox.appendChild(l);
+    var w = document.createElement('div');
+    w.className = 'fcWhy';
+    w.textContent = '💬 ' + explainLine(line);
+    codeBox.appendChild(w);
+  });
+
+  document.getElementById('victoryOverlay').classList.remove('open');
+  document.getElementById('ficheOverlay').classList.add('open');
+}
+document.getElementById('victoryFiche').addEventListener('click', function(){
+  if(activeVictoryId) openFiche(activeVictoryId);
+});
+document.getElementById('ficheCloseX').addEventListener('click', function(){
+  document.getElementById('ficheOverlay').classList.remove('open');
+});
+document.getElementById('ficheOverlay').addEventListener('click', function(ev){
+  if(ev.target === this) this.classList.remove('open');
+});
+
 function renderTabs(){
   var tabs = document.getElementById('tabs');
-  var html = '<div class="tab' + (state.cat==='all'?' active':'') + '" data-cat="all">TOUTES LES SEMAINES</div>';
+  var html = '<div class="tab' + (state.cat==='all'?' active':'') + '" data-cat="all">TOUS LES CHAPITRES</div>';
   for(var c=1;c<=5;c++){
     var pct = pctOfCat(c);
     var badge = pct === 100 ? ' ✅' : '';
@@ -881,6 +1405,7 @@ function renderAll(){
 }
 
 var activeId = null;
+var activeVictoryId = null;
 var hintShown = false;
 var quizAnswered = false;
 var chronoStart = null;
@@ -906,6 +1431,751 @@ function startChrono(){
 }
 function stopChrono(){
   clearInterval(chronoTimer);
+}
+
+/* ---------- MINI-JEU DE PRÉCISION (FPS warm-up) ---------- */
+var PRECISION_KEY = "zone01_piscine_precision_best_v1";
+var precisionRound = 0;
+var precisionScore = 0;
+var precisionTargetTimer = null;
+var precisionSpawnTime = 0;
+var PRECISION_ROUNDS = 6;
+
+function getBestPrecision(){
+  try{ return parseInt(localStorage.getItem(PRECISION_KEY) || "0", 10); }catch(e){ return 0; }
+}
+function setBestPrecision(v){
+  try{ localStorage.setItem(PRECISION_KEY, String(v)); }catch(e){}
+}
+
+document.getElementById('precisionOpenBtn').addEventListener('click', function(){
+  document.getElementById('precisionOverlay').classList.add('open');
+  resetPrecisionUI();
+});
+document.getElementById('precisionCloseX').addEventListener('click', function(){
+  document.getElementById('precisionOverlay').classList.remove('open');
+  clearTimeout(precisionTargetTimer);
+});
+document.getElementById('precisionOverlay').addEventListener('click', function(ev){
+  if(ev.target === this){ this.classList.remove('open'); clearTimeout(precisionTargetTimer); }
+});
+
+function resetPrecisionUI(){
+  document.getElementById('precisionResult').style.display = 'none';
+  document.getElementById('precisionStartBtn').style.display = 'block';
+  document.getElementById('precisionStartBtn').textContent = '▶ Lancer le calibrage';
+  document.getElementById('precisionScoreHud').style.display = 'none';
+  var arena = document.getElementById('precisionArena');
+  Array.prototype.forEach.call(arena.querySelectorAll('.precisionTarget'), function(t){ t.remove(); });
+}
+
+document.getElementById('precisionStartBtn').addEventListener('click', function(){
+  precisionRound = 0;
+  precisionScore = 0;
+  document.getElementById('precisionStartBtn').style.display = 'none';
+  document.getElementById('precisionResult').style.display = 'none';
+  document.getElementById('precisionScoreHud').style.display = 'block';
+  spawnPrecisionTarget();
+});
+
+function spawnPrecisionTarget(){
+  var arena = document.getElementById('precisionArena');
+  Array.prototype.forEach.call(arena.querySelectorAll('.precisionTarget'), function(t){ t.remove(); });
+  if(precisionRound >= PRECISION_ROUNDS){
+    finishPrecision();
+    return;
+  }
+  precisionRound++;
+  document.getElementById('precisionRound').textContent = precisionRound;
+  document.getElementById('precisionScoreLive').textContent = precisionScore;
+
+  var target = document.createElement('div');
+  target.className = 'precisionTarget';
+  target.textContent = '🎯';
+  var arenaW = arena.clientWidth, arenaH = arena.clientHeight;
+  var size = 40;
+  var x = Math.random() * (arenaW - size - 10) + 5;
+  var y = Math.random() * (arenaH - size - 40) + 35;
+  target.style.left = x + 'px';
+  target.style.top = y + 'px';
+  precisionSpawnTime = Date.now();
+  target.addEventListener('click', function(ev){
+    ev.stopPropagation();
+    var reaction = Date.now() - precisionSpawnTime;
+    var pts = Math.max(10, 1000 - reaction);
+    precisionScore += Math.round(pts);
+    clearTimeout(precisionTargetTimer);
+    spawnPrecisionTarget();
+  });
+  arena.appendChild(target);
+
+  clearTimeout(precisionTargetTimer);
+  precisionTargetTimer = setTimeout(function(){
+    // cible ratée (pas cliquée à temps) : 0 point, on passe au round suivant
+    spawnPrecisionTarget();
+  }, 1400);
+}
+
+function finishPrecision(){
+  document.getElementById('precisionScoreHud').style.display = 'none';
+  var best = getBestPrecision();
+  var isNewBest = precisionScore > best;
+  if(isNewBest) setBestPrecision(precisionScore);
+
+  var grade;
+  if(precisionScore >= 5000) grade = "🏆 RADIANT AIM — précision de sniper Apex";
+  else if(precisionScore >= 4000) grade = "💎 DIAMOND AIM — sacrément propre";
+  else if(precisionScore >= 3000) grade = "🥇 GOLD AIM — solide";
+  else if(precisionScore >= 1500) grade = "🥈 SILVER AIM — ça vient";
+  else grade = "🥉 BRONZE AIM — warm-up recommandé";
+
+  var resultEl = document.getElementById('precisionResult');
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = grade + '<br>Score : ' + precisionScore +
+    (isNewBest ? ' — 🆕 NOUVEAU RECORD !' : ' (record : ' + best + ')');
+
+  var btn = document.getElementById('precisionStartBtn');
+  btn.style.display = 'block';
+  btn.textContent = '↺ Recalibrer';
+}
+
+/* ---------- SALLE SECRÈTE URBEX (100% clear) ---------- */
+var URBEX_SHOWN_KEY = "zone01_piscine_urbex_shown_v1";
+function maybeShowUrbex(){
+  if(pctGlobal() < 100) return;
+  var alreadyShown = false;
+  try{ alreadyShown = localStorage.getItem(URBEX_SHOWN_KEY) === "1"; }catch(e){}
+  if(alreadyShown) return;
+  try{ localStorage.setItem(URBEX_SHOWN_KEY, "1"); }catch(e){}
+  setTimeout(openUrbex, 1400);
+}
+function openUrbex(){
+  var doneCount = Object.keys(progress).filter(function(k){return progress[k];}).length;
+  var codedCount = Object.keys(codeDone).filter(function(k){return codeDone[k];}).length;
+  var clearedCount = Object.keys(cleared).filter(function(k){return cleared[k];}).length;
+  var best = getBestPrecision();
+  var grid = document.getElementById('urbexStatsGrid');
+  grid.innerHTML =
+    '<div class="urbexStat"><div class="uVal">' + doneCount + '/120</div><div class="uLabel">Missions comprises</div></div>' +
+    '<div class="urbexStat"><div class="uVal">' + codedCount + '/120</div><div class="uLabel">Codes assemblés</div></div>' +
+    '<div class="urbexStat"><div class="uVal">' + clearedCount + '/120</div><div class="uLabel">Trophées obtenus</div></div>' +
+    '<div class="urbexStat"><div class="uVal">' + best + '</div><div class="uLabel">Record précision</div></div>';
+  document.getElementById('urbexOverlay').classList.add('open');
+}
+document.getElementById('urbexCloseX').addEventListener('click', function(){
+  document.getElementById('urbexOverlay').classList.remove('open');
+});
+document.getElementById('urbexCloseBtn').addEventListener('click', function(){
+  document.getElementById('urbexOverlay').classList.remove('open');
+});
+document.getElementById('urbexOverlay').addEventListener('click', function(ev){
+  if(ev.target === this) this.classList.remove('open');
+});
+
+
+/* ---------- DÉFENSE TACTIQUE (jeu vidéo canvas) ---------- */
+var TACTICAL_BEST_KEY = "zone01_piscine_tactical_best_v1";
+var tac = {
+  canvas: null, ctx: null, enemies: [], running: false, raf: null,
+  wave: 1, hp: 5, score: 0, spawned: 0, toSpawn: 0, spawnTimer: 0, lastTs: 0
+};
+
+document.getElementById('tacticalOpenBtn').addEventListener('click', function(){
+  document.getElementById('tacticalOverlay').classList.add('open');
+  showTacticalStart();
+});
+document.getElementById('tacticalCloseX').addEventListener('click', function(){
+  stopTactical();
+  document.getElementById('tacticalOverlay').classList.remove('open');
+});
+document.getElementById('tacticalOverlay').addEventListener('click', function(ev){
+  if(ev.target === this){ stopTactical(); this.classList.remove('open'); }
+});
+
+function getTacticalBest(){
+  try{ return parseInt(localStorage.getItem(TACTICAL_BEST_KEY) || "0", 10); }catch(e){ return 0; }
+}
+function setTacticalBest(v){
+  try{ localStorage.setItem(TACTICAL_BEST_KEY, String(v)); }catch(e){}
+}
+
+function showTacticalStart(){
+  document.getElementById('tacticalStart').style.display = 'block';
+  document.getElementById('tacticalPlayWrap').style.display = 'none';
+  document.getElementById('tacticalDefuse').style.display = 'none';
+  document.getElementById('tacticalEnd').style.display = 'none';
+  var best = getTacticalBest();
+  document.getElementById('tacticalBest').textContent = best > 0 ? ("Meilleur score : " + best + " pts") : "Pas encore de run enregistrée.";
+}
+
+document.getElementById('tacticalStartBtn').addEventListener('click', startTactical);
+document.getElementById('tacticalReplayBtn').addEventListener('click', startTactical);
+
+function startTactical(){
+  document.getElementById('tacticalStart').style.display = 'none';
+  document.getElementById('tacticalEnd').style.display = 'none';
+  document.getElementById('tacticalDefuse').style.display = 'none';
+  document.getElementById('tacticalPlayWrap').style.display = 'block';
+
+  tac.canvas = document.getElementById('tacticalCanvas');
+  tac.ctx = tac.canvas.getContext('2d');
+  tac.enemies = [];
+  tac.wave = 1; tac.hp = 5; tac.score = 0;
+  startWave();
+
+  tac.canvas.onclick = function(ev){
+    var rect = tac.canvas.getBoundingClientRect();
+    var scaleX = tac.canvas.width / rect.width, scaleY = tac.canvas.height / rect.height;
+    var mx = (ev.clientX - rect.left) * scaleX, my = (ev.clientY - rect.top) * scaleY;
+    for(var i=tac.enemies.length-1;i>=0;i--){
+      var e = tac.enemies[i];
+      var dx = e.x - mx, dy = e.y - my;
+      if(Math.sqrt(dx*dx+dy*dy) < 16){
+        tac.enemies.splice(i,1);
+        tac.score += 10;
+        updateTacticalHud();
+        break;
+      }
+    }
+  };
+
+  tac.running = true;
+  tac.lastTs = performance.now();
+  cancelAnimationFrame(tac.raf);
+  tac.raf = requestAnimationFrame(tacticalLoop);
+}
+
+function startWave(){
+  tac.spawned = 0;
+  tac.toSpawn = 3 + tac.wave * 2;
+  tac.spawnTimer = 0;
+  updateTacticalHud();
+}
+
+function updateTacticalHud(){
+  document.getElementById('tacticalWave').textContent = "Vague " + tac.wave;
+  document.getElementById('tacticalHp').textContent = "❤️".repeat(Math.max(0, tac.hp)) + "🖤".repeat(Math.max(0, 5 - tac.hp));
+  document.getElementById('tacticalScore').textContent = "Score " + tac.score;
+}
+
+function spawnEnemy(){
+  var side = Math.floor(Math.random()*4);
+  var x, y;
+  var w = tac.canvas.width, h = tac.canvas.height;
+  if(side === 0){ x = 0; y = Math.random()*h; }
+  else if(side === 1){ x = w; y = Math.random()*h; }
+  else if(side === 2){ x = Math.random()*w; y = 0; }
+  else { x = Math.random()*w; y = h; }
+  var cx = w/2, cy = h/2;
+  var angle = Math.atan2(cy - y, cx - x);
+  var speed = 0.35 + tac.wave * 0.05;
+  tac.enemies.push({x:x, y:y, dx:Math.cos(angle)*speed, dy:Math.sin(angle)*speed});
+}
+
+function tacticalLoop(ts){
+  if(!tac.running) return;
+  var dt = ts - tac.lastTs;
+  tac.lastTs = ts;
+  var ctx = tac.ctx, w = tac.canvas.width, h = tac.canvas.height, cx = w/2, cy = h/2;
+
+  // spawn
+  if(tac.spawned < tac.toSpawn){
+    tac.spawnTimer -= dt;
+    if(tac.spawnTimer <= 0){
+      spawnEnemy();
+      tac.spawned++;
+      tac.spawnTimer = Math.max(250, 900 - tac.wave*40);
+    }
+  }
+
+  // move enemies
+  for(var i=tac.enemies.length-1;i>=0;i--){
+    var e = tac.enemies[i];
+    e.x += e.dx * dt; e.y += e.dy * dt;
+    var d = Math.sqrt((e.x-cx)*(e.x-cx) + (e.y-cy)*(e.y-cy));
+    if(d < 18){
+      tac.enemies.splice(i,1);
+      tac.hp--;
+      updateTacticalHud();
+      if(tac.hp <= 0){ endTactical(); return; }
+    }
+  }
+
+  // draw
+  ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle = "rgba(255,255,255,0.05)";
+  for(var gx=0; gx<w; gx+=40){ ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,h); ctx.stroke(); }
+  for(var gy=0; gy<h; gy+=40){ ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(w,gy); ctx.stroke(); }
+
+  // objectif central
+  ctx.save();
+  ctx.translate(cx,cy);
+  ctx.strokeStyle = "#da2c38"; ctx.lineWidth = 2;
+  ctx.beginPath();
+  for(var s=0;s<6;s++){
+    var a = Math.PI/3*s - Math.PI/2;
+    var px = Math.cos(a)*22, py = Math.sin(a)*22;
+    if(s===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.closePath(); ctx.stroke();
+  ctx.fillStyle = "rgba(218,44,56,0.15)"; ctx.fill();
+  ctx.font = "16px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillStyle = "#fff"; ctx.fillText("🖥️", 0, 1);
+  ctx.restore();
+
+  // enemies
+  tac.enemies.forEach(function(e){
+    ctx.save();
+    ctx.translate(e.x, e.y);
+    ctx.fillStyle = "#ff4655";
+    ctx.beginPath();
+    ctx.arc(0,0,9,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = "#fff"; ctx.font="10px sans-serif"; ctx.textAlign="center"; ctx.textBaseline="middle";
+    ctx.fillText("!", 0, 0);
+    ctx.restore();
+  });
+
+  // wave clear ?
+  if(tac.spawned >= tac.toSpawn && tac.enemies.length === 0){
+    tac.running = false;
+    if(tac.wave % 3 === 0){
+      startDefuse();
+    } else {
+      tac.wave++;
+      setTimeout(function(){ tac.running = true; tac.lastTs = performance.now(); startWave(); tac.raf = requestAnimationFrame(tacticalLoop); }, 500);
+    }
+    return;
+  }
+
+  tac.raf = requestAnimationFrame(tacticalLoop);
+}
+
+var defuseTimerInterval = null;
+function startDefuse(){
+  document.getElementById('tacticalDefuse').style.display = 'block';
+  var e = EX[Math.floor(Math.random()*EX.length)];
+  document.getElementById('defuseCall').textContent = e.quiz.call;
+  var opts = shuffle([
+    {text: e.quiz.correct, ok:true},
+    {text: e.quiz.wrong[0], ok:false},
+    {text: e.quiz.wrong[1], ok:false}
+  ]);
+  var optsBox = document.getElementById('defuseOpts');
+  optsBox.innerHTML = '';
+  var answered = false;
+  opts.forEach(function(o){
+    var btn = document.createElement('button');
+    btn.className = 'quizOpt';
+    btn.textContent = o.text;
+    btn.addEventListener('click', function(){
+      if(answered) return;
+      answered = true;
+      clearInterval(defuseTimerInterval);
+      if(o.ok){
+        tac.hp = Math.min(5, tac.hp + 1);
+        tac.score += 50;
+        setBuddy(["Désamorcé. +1 PV, +50 points, propre.", "Nickel, fragment neutralisé.", "GG, terminal sauvé pour cette fois."]);
+      } else {
+        setBuddy(["Raté, mais bon, le terminal tient encore le coup.", "Pas grave, prochaine vague.", "Ça arrive, on continue."]);
+      }
+      finishDefuse();
+    });
+    optsBox.appendChild(btn);
+  });
+
+  var timeLeft = 8;
+  document.getElementById('defuseTimer').textContent = timeLeft;
+  clearInterval(defuseTimerInterval);
+  defuseTimerInterval = setInterval(function(){
+    timeLeft--;
+    document.getElementById('defuseTimer').textContent = timeLeft;
+    if(timeLeft <= 0){
+      clearInterval(defuseTimerInterval);
+      if(!answered){ answered = true; finishDefuse(); }
+    }
+  }, 1000);
+}
+function finishDefuse(){
+  document.getElementById('tacticalDefuse').style.display = 'none';
+  tac.wave++;
+  updateTacticalHud();
+  tac.running = true;
+  tac.lastTs = performance.now();
+  startWave();
+  tac.raf = requestAnimationFrame(tacticalLoop);
+}
+
+function stopTactical(){
+  tac.running = false;
+  cancelAnimationFrame(tac.raf);
+  clearInterval(defuseTimerInterval);
+}
+
+function endTactical(){
+  stopTactical();
+  var best = getTacticalBest();
+  var isNew = tac.score > best;
+  if(isNew) setTacticalBest(tac.score);
+
+  var grade;
+  if(tac.score >= 400) grade = "🏆 RADIANT OPS";
+  else if(tac.score >= 250) grade = "💎 DIAMOND OPS";
+  else if(tac.score >= 150) grade = "🥇 GOLD OPS";
+  else if(tac.score >= 70) grade = "🥈 SILVER OPS";
+  else grade = "🥉 BRONZE OPS";
+
+  document.getElementById('tacticalPlayWrap').style.display = 'none';
+  document.getElementById('tacticalEnd').style.display = 'block';
+  document.getElementById('tacticalEndTitle').textContent = grade;
+  document.getElementById('tacticalEndScore').textContent =
+    "Vague " + tac.wave + " atteinte · Score " + tac.score + (isNew ? " — 🆕 NOUVEAU RECORD !" : " (record : " + best + ")");
+  setBuddy(["Terminal tombé. GG quand même, t'as tenu " + tac.wave + " vagues.", "Défaite honorable. Retente, tu feras mieux."]);
+}
+
+
+var STORY_ROOMS = [
+  {cat:1, icon:"🥩", name:"Zone d'Atterrissage", game:"vending"},
+  {cat:2, icon:"🗝️", name:"Le QG", game:null},
+  {cat:3, icon:"🐱", name:"Atelier des Strings", game:"kittens"},
+  {cat:4, icon:"📓", name:"Labo des Nombres", game:null},
+  {cat:5, icon:"🚪", name:"Repaire du Boss", game:null}
+];
+
+document.getElementById('storyMapOpenBtn').addEventListener('click', function(){
+  renderMapGrid();
+  document.getElementById('mapDetail').style.display = 'none';
+  document.getElementById('mapGrid').style.display = 'grid';
+  document.getElementById('storyMapOverlay').classList.add('open');
+});
+document.getElementById('storyMapCloseX').addEventListener('click', function(){
+  document.getElementById('storyMapOverlay').classList.remove('open');
+});
+document.getElementById('storyMapOverlay').addEventListener('click', function(ev){
+  if(ev.target === this) this.classList.remove('open');
+});
+document.getElementById('mapBack').addEventListener('click', function(){
+  document.getElementById('mapDetail').style.display = 'none';
+  document.getElementById('mapGrid').style.display = 'grid';
+});
+
+function isUrbexUnlocked(){
+  try{ return localStorage.getItem(URBEX_SHOWN_KEY) === "1"; }catch(e){ return false; }
+}
+
+function renderMapGrid(){
+  var seen = getStorySeen();
+  var grid = document.getElementById('mapGrid');
+  var html = '';
+  STORY_ROOMS.forEach(function(room){
+    var unlocked = !!seen[room.cat];
+    html += '<div class="mapNode' + (unlocked?'':' locked') + '" data-cat="'+room.cat+'">' +
+      '<div class="mnIcon">' + (unlocked ? room.icon : '🔒') + '</div>' +
+      '<div class="mnName">' + (unlocked ? room.name : '???') + '</div>' +
+      '<div class="mnStatus">' + (unlocked ? 'Explorée' : pctOfCat(room.cat) + '% pour débloquer') + '</div>' +
+      '</div>';
+  });
+  var secretUnlocked = isUrbexUnlocked();
+  html += '<div class="mapNode secret' + (secretUnlocked?'':' locked') + '" data-cat="secret">' +
+    '<div class="mnIcon">' + (secretUnlocked ? '🏚️' : '🔒') + '</div>' +
+    '<div class="mnName">' + (secretUnlocked ? 'Zone Interdite' : '???') + '</div>' +
+    '<div class="mnStatus">' + (secretUnlocked ? 'Explorée' : '100% pour débloquer') + '</div>' +
+    '</div>';
+  grid.innerHTML = html;
+  Array.prototype.forEach.call(grid.querySelectorAll('.mapNode:not(.locked)'), function(el){
+    el.addEventListener('click', function(){ openMapDetail(this.getAttribute('data-cat')); });
+  });
+}
+
+function openMapDetail(catKey){
+  document.getElementById('mapGrid').style.display = 'none';
+  document.getElementById('mapDetail').style.display = 'block';
+  var gameBox = document.getElementById('mapDetailGame');
+  gameBox.innerHTML = '';
+
+  if(catKey === 'secret'){
+    document.getElementById('mapDetailEyebrow').textContent = "ZONE INTERDITE";
+    document.getElementById('mapDetailIcon').textContent = "🏚️";
+    document.getElementById('mapDetailText').innerHTML = "100% de la piscine explorée. Derrière la trappe : rien qu'un vieux poste de contrôle poussiéreux, tes stats affichées sur un écran cassé, et un post-it final du buddy : « GG. Sérieux. »";
+    return;
+  }
+
+  var room = STORY_ROOMS.find(function(r){ return r.cat == catKey; });
+  var beat = STORY_BEATS[room.cat];
+  document.getElementById('mapDetailEyebrow').textContent = beat.eyebrow;
+  document.getElementById('mapDetailIcon').textContent = beat.icon;
+  document.getElementById('mapDetailText').innerHTML = beat.text;
+
+  if(room.game === 'vending') renderVendingGame(gameBox);
+  if(room.game === 'kittens') renderKittenGame(gameBox);
+}
+
+/* --- Mini-jeu : craquer le code du distributeur de Kobé --- */
+var VENDING_KEY = "zone01_piscine_vending_solved_v1";
+var VENDING_CODE = "418";
+function renderVendingGame(container){
+  var solved = false;
+  try{ solved = localStorage.getItem(VENDING_KEY) === "1"; }catch(e){}
+  var box = document.createElement('div');
+  box.className = 'vendingGame';
+  if(solved){
+    box.innerHTML = '<div class="vendingFeedback vendingWin">🥩 CODE CRAQUÉ : le distributeur s\'ouvre enfin. À l\'intérieur : une canette vide et un ticket de caisse de 2019. C\'était pas grand-chose, mais t\'as quand même réussi.</div>';
+    container.appendChild(box);
+    return;
+  }
+  box.innerHTML =
+    '<div style="font-size:12.5px;color:var(--ink-dim);margin-bottom:10px;">Le clavier du distributeur a 3 chiffres à trouver (0-9 chacun). Tape un essai, le buddy te dit si t\'es chaud ou froid.</div>' +
+    '<div class="vendingRow">' +
+      '<input class="vendingInput" maxlength="1" id="vd0" inputmode="numeric">' +
+      '<input class="vendingInput" maxlength="1" id="vd1" inputmode="numeric">' +
+      '<input class="vendingInput" maxlength="1" id="vd2" inputmode="numeric">' +
+      '<button class="btn primary" id="vendingTry" style="width:auto;padding:0 16px;">Essayer</button>' +
+    '</div>' +
+    '<div class="vendingFeedback" id="vendingFeedback">3 essais et tu commences à piger le pattern normalement.</div>';
+  container.appendChild(box);
+
+  document.getElementById('vendingTry').addEventListener('click', function(){
+    var guess = (document.getElementById('vd0').value || '?') + (document.getElementById('vd1').value || '?') + (document.getElementById('vd2').value || '?');
+    var fb = document.getElementById('vendingFeedback');
+    if(guess.length !== 3 || guess.indexOf('?') !== -1){
+      fb.textContent = "Faut remplir les 3 cases, chef.";
+      return;
+    }
+    if(guess === VENDING_CODE){
+      try{ localStorage.setItem(VENDING_KEY, "1"); }catch(e){}
+      box.innerHTML = '<div class="vendingFeedback vendingWin">🥩 CODE CRAQUÉ : le distributeur s\'ouvre enfin. À l\'intérieur : une canette vide et un ticket de caisse de 2019. C\'était pas grand-chose, mais t\'as quand même réussi.</div>';
+      return;
+    }
+    var correctPos = 0, correctDigit = 0;
+    var codeArr = VENDING_CODE.split(''), guessArr = guess.split('');
+    var usedCode = [false,false,false], usedGuess = [false,false,false];
+    for(var i=0;i<3;i++){ if(guessArr[i] === codeArr[i]){ correctPos++; usedCode[i]=true; usedGuess[i]=true; } }
+    for(var i=0;i<3;i++){
+      if(usedGuess[i]) continue;
+      for(var j=0;j<3;j++){
+        if(!usedCode[j] && guessArr[i] === codeArr[j]){ correctDigit++; usedCode[j]=true; break; }
+      }
+    }
+    fb.textContent = "🔥 " + correctPos + " chiffre(s) bien placé(s) · 🧊 " + correctDigit + " chiffre(s) présent(s) mais mal placé(s). Retente.";
+  });
+}
+
+/* --- Mini-jeu : sauvetage des chatons dans les gaines --- */
+var KITTEN_KEY = "zone01_piscine_kittens_found_v1";
+var KITTEN_POSITIONS = [1, 4, 7]; // index des vents qui cachent un chaton (sur 9)
+function getKittensFound(){
+  try{ return JSON.parse(localStorage.getItem(KITTEN_KEY) || '[]'); }catch(e){ return []; }
+}
+function saveKittensFound(arr){
+  try{ localStorage.setItem(KITTEN_KEY, JSON.stringify(arr)); }catch(e){}
+}
+function renderKittenGame(container){
+  var found = getKittensFound();
+  var box = document.createElement('div');
+  box.innerHTML =
+    '<div style="font-size:12.5px;color:var(--ink-dim);margin:6px 0 4px;">9 gaines de ventilation. 3 cachent un chaton coincé. Clique pour chercher (les cases déjà cherchées restent ouvertes).</div>' +
+    '<div class="kittenGrid" id="kittenGrid"></div>' +
+    '<div class="kittenCount" id="kittenCount"></div>';
+  container.appendChild(box);
+  renderKittenGrid();
+
+  function renderKittenGrid(){
+    var grid = document.getElementById('kittenGrid');
+    var revealed = getKittensFound();
+    var html = '';
+    for(var i=0;i<9;i++){
+      var isKitten = KITTEN_POSITIONS.indexOf(i) !== -1;
+      var wasRevealed = revealed.indexOf(i) !== -1;
+      if(wasRevealed){
+        html += '<div class="vent ' + (isKitten ? 'found' : 'empty') + '">' + (isKitten ? '🐱' : '·') + '</div>';
+      } else {
+        html += '<div class="vent" data-idx="'+i+'">🔩</div>';
+      }
+    }
+    grid.innerHTML = html;
+    var kittensFoundCount = revealed.filter(function(i){ return KITTEN_POSITIONS.indexOf(i) !== -1; }).length;
+    document.getElementById('kittenCount').textContent = kittensFoundCount === 3
+      ? "🐱 Les 3 chatons sont sauvés ! Ton buddy est officiellement en mode papa fier."
+      : kittensFoundCount + " / 3 chatons trouvés";
+
+    Array.prototype.forEach.call(grid.querySelectorAll('.vent[data-idx]'), function(el){
+      el.addEventListener('click', function(){
+        var idx = parseInt(this.getAttribute('data-idx'), 10);
+        var rev = getKittensFound();
+        if(rev.indexOf(idx) === -1){ rev.push(idx); saveKittensFound(rev); }
+        renderKittenGrid();
+      });
+    });
+  }
+}
+
+/* ---------- CINÉMATIQUE D'INTRO ---------- */
+var CUTSCENE_KEY = "zone01_piscine_cutscene_seen_v1";
+var CUTSCENE_SLIDES = [
+  "<b>TRANSMISSION INTERCEPTÉE — RÉSEAU ZONE01 ROUEN.</b><br><br>Un signal bizarre remonte du sous-sol du campus. Une piscine condamnée depuis des années. Personne y retourne depuis « l'incident du distributeur de bœuf de Kobé » (personne veut en parler, encore aujourd'hui).",
+  "Ta squad est envoyée en reconnaissance. Composition : toi, et ton pote de terminal — un chat tacticien qui parle beaucoup trop pour quelqu'un qui a pas de mains.",
+  "Objectif : traverser 5 chapitres du complexe, désamorcer 120 fragments de code corrompu, et survivre à ce qui se planque tout en bas de la piscine — la Zone Interdite.",
+  "Règle d'engagement : aucune zone n'est verrouillée. T'avances où tu veux, à ton rythme, dans l'ordre que tu veux. La seule règle, c'est que chaque round loupé fait une meilleure histoire à raconter après.",
+  "Dernière chose : y'a des chatons coincés dans une gaine de ventilation quelque part là-dedans. Fais gaffe où tu marches.<br><br>Bon. Prêt à drop ?"
+];
+var cutsceneIdx = 0;
+
+function renderCutsceneSlide(){
+  document.getElementById('cutsceneText').innerHTML = CUTSCENE_SLIDES[cutsceneIdx];
+  var dots = document.getElementById('cutsceneProgress');
+  dots.innerHTML = CUTSCENE_SLIDES.map(function(_, i){
+    return '<div class="dot' + (i <= cutsceneIdx ? ' on' : '') + '"></div>';
+  }).join('');
+  document.getElementById('cutsceneNext').textContent = (cutsceneIdx === CUTSCENE_SLIDES.length - 1) ? "C'est parti ➜" : "Suivant ➜";
+}
+function closeCutscene(){
+  document.getElementById('cutsceneOverlay').classList.add('hidden');
+  try{ localStorage.setItem(CUTSCENE_KEY, "1"); }catch(e){}
+}
+document.getElementById('cutsceneNext').addEventListener('click', function(){
+  if(cutsceneIdx < CUTSCENE_SLIDES.length - 1){
+    cutsceneIdx++;
+    renderCutsceneSlide();
+  } else {
+    closeCutscene();
+  }
+});
+document.getElementById('cutsceneSkip').addEventListener('click', closeCutscene);
+
+(function initCutscene(){
+  var seen = false;
+  try{ seen = localStorage.getItem(CUTSCENE_KEY) === "1"; }catch(e){}
+  if(seen){
+    document.getElementById('cutsceneOverlay').classList.add('hidden');
+  } else {
+    renderCutsceneSlide();
+  }
+})();
+
+/* ---------- STORY BEATS (fin de chapitre) ---------- */
+var STORY_SEEN_KEY = "zone01_piscine_story_seen_v1";
+var STORY_BEATS = {
+  1: {icon:"🥩", eyebrow:"TRANSMISSION — CHAPITRE 1 SÉCURISÉ", text:"Zone d'Atterrissage nettoyée. Sous une dalle fissurée, tu trouves un vieux distributeur manuel : « BŒUF DE KOBÉ — RUPTURE DE STOCK DEPUIS 2019 ». Ton buddy renifle longuement et dit que c'est louche. On avance quand même."},
+  2: {icon:"🗝️", eyebrow:"TRANSMISSION — CHAPITRE 2 SÉCURISÉ", text:"Le QG est vidé. Dans un tiroir de bureau : une carte d'accès et un post-it écrit à la main — « si tu lis ça, méfie-toi du chapitre 3, les strings mordent ». Personne sait ce que ça veut dire. On continue."},
+  3: {icon:"🐱", eyebrow:"TRANSMISSION — CHAPITRE 3 SÉCURISÉ", text:"Atelier des strings terminé. T'entends un miaulement dans une gaine de ventilation au-dessus de toi. Tu notes la position sur la carte. On reviendra les chercher, promis (le buddy insiste beaucoup là-dessus)."},
+  4: {icon:"📓", eyebrow:"TRANSMISSION — CHAPITRE 4 SÉCURISÉ", text:"Labo des nombres bouclé. Sous un vieux serveur, un carnet de notes qui parle d'un « signal Radiant » tout en bas du complexe. Ton buddy devient soudainement très motivé à continuer."},
+  5: {icon:"🚪", eyebrow:"TRANSMISSION — CHAPITRE 5 SÉCURISÉ", text:"Repaire du Boss vidé. Derrière la dernière porte : une trappe scellée, rouillée, avec écrit dessus « ZONE INTERDITE ». C'est le moment. T'as pas fait tout ça pour reculer maintenant."}
+};
+
+function getStorySeen(){
+  try{ return JSON.parse(localStorage.getItem(STORY_SEEN_KEY) || '{}'); }catch(e){ return {}; }
+}
+function setStorySeen(obj){
+  try{ localStorage.setItem(STORY_SEEN_KEY, JSON.stringify(obj)); }catch(e){}
+}
+function maybeShowStoryBeat(cat){
+  var beat = STORY_BEATS[cat];
+  if(!beat) return;
+  if(pctOfCat(cat) < 100) return;
+  var seen = getStorySeen();
+  if(seen[cat]) return;
+  seen[cat] = true;
+  setStorySeen(seen);
+  document.getElementById('storyEyebrow').textContent = beat.eyebrow;
+  document.getElementById('storyIcon').textContent = beat.icon;
+  document.getElementById('storyText').innerHTML = beat.text;
+  setTimeout(function(){
+    document.getElementById('storyOverlay').classList.add('open');
+  }, 400);
+}
+document.getElementById('storyCloseBtn').addEventListener('click', function(){
+  document.getElementById('storyOverlay').classList.remove('open');
+});
+document.getElementById('storyOverlay').addEventListener('click', function(ev){
+  if(ev.target === this) this.classList.remove('open');
+});
+
+
+function showEgg(icon, title, text){
+  document.getElementById('eggIcon').textContent = icon;
+  document.getElementById('eggTitle').textContent = title;
+  document.getElementById('eggText').textContent = text;
+  document.getElementById('eggOverlay').classList.add('open');
+}
+document.getElementById('eggCloseX').addEventListener('click', function(){
+  document.getElementById('eggOverlay').classList.remove('open');
+});
+document.getElementById('eggOverlay').addEventListener('click', function(ev){
+  if(ev.target === this) this.classList.remove('open');
+});
+
+var buddyClickCount = 0;
+document.querySelector('.buddyIcon').addEventListener('click', function(){
+  buddyClickCount++;
+  if(buddyClickCount === 5){
+    buddyClickCount = 0;
+    showEgg("🐱‍👤", "BRISURE DU 4E MUR", "Ouais, ok, j'existe même pas vraiment, je suis juste un tableau de phrases piochées au hasard. Mais je crois quand même en toi. Retourne bosser (jouer).");
+  } else {
+    setBuddy(["Oui ?", "Quoi ?", "Ping reçu.", "Je suis juste un chat, pas un oracle."]);
+  }
+});
+
+var eggSearchTriggered = false;
+var EGG_TERMS = {
+  "tdc": {icon:"👑", title:"TDC DANS LA PLACE", text:"Ouais on sait, c'est TOI le TDC. Légende vivante de la piscine, respecté même par le compilateur. Retourne à tes missions, champion."},
+  "kobe": {icon:"🥩", title:"BŒUF DE KOBÉ DÉTECTÉ", text:"Un bœuf de Kobé bien élevé, masse tranquillement dans son pré, écoute du Mozart... et toi tu masses tranquillement tes exos. Même vibe, plus stylé."},
+  "chat": {icon:"🐱", title:"CHATON EN APPROCHE", text:"Un chaton vient de traverser le terminal en marchant sur ton clavier. Il a accidentellement corrigé un bug. Bon chat."},
+  "urbex": {icon:"🏚️", title:"ZONE EXPLORÉE", text:"T'as fouillé jusque dans la search bar. Respect total du niveau de curiosité. Y'a d'autres secrets planqués, cherche encore."}
+};
+document.getElementById('search').addEventListener('input', function(){
+  var v = this.value.trim().toLowerCase();
+  var egg = EGG_TERMS[v];
+  if(egg && !eggSearchTriggered){
+    eggSearchTriggered = true;
+    showEgg(egg.icon, egg.title, egg.text);
+  }
+  if(!egg) eggSearchTriggered = false;
+});
+
+
+var BUDDY_LINES = {
+  open: [
+    "Nouvelle mission, TDC. Respire, vise juste, comme d'hab.",
+    "On y va, calme et précis. Pas besoin de spray, un seul coup suffit.",
+    "Nouveau contrat. Si tu bloques, mate le Plan de tactique, c'est fait pour ça.",
+    "GO. Traite ça comme une ronde de warm-up avant la vraie game.",
+    "Nouvelle zone à looter. Grouille pas, la ring rétrécit pas ici.",
+    "Mission reçue. Un chat a déjà vérifié, c'est safe, tu peux y aller."
+  ],
+  codeWin: [
+    "Clean. T'as assemblé ça plus vite qu'un reload en combat.",
+    "Bien joué, code stable, zéro flinch.",
+    "Nickel. Digne d'un highlight de fin de game.",
+    "Assemblé nickel, plus précis qu'un bœuf de Kobé bien découpé."
+  ],
+  codeLose: [
+    "Pas grave, même les pros whiff parfois. Relis les explications et repush.",
+    "Raté cette fois — regarde le vert/rouge, ça te dit où ça a merdé.",
+    "Ça arrive. Un bon joueur, c'est surtout quelqu'un qui update son plan après un fail.",
+    "Even TDC rate des trucs de temps en temps (rarement, mais ça arrive)."
+  ],
+  quizWin: [
+    "Confirmé. T'as capté le truc, pas juste deviné.",
+    "GG, validé propre. Un bœuf de Kobé bien cuit, ça prend du temps aussi — patience.",
+    "Nice, encore une notion qui rentre. Ça se voit que tu progresses.",
+    "Validé. Le chaton du terminal est fier de toi."
+  ],
+  quizLose: [
+    "Pas cette fois — retourne écouter le Brief, l'info est là.",
+    "Raté, mais t'as pas perdu de rang pour ça, c'est pas du ranked.",
+    "Cherche encore un peu, la réponse est cachée dans le Plan de tactique.",
+    "Whiff. Ça arrive, respire, recharge, retente."
+  ],
+  victory: [
+    "Mission clean-clear. T'as chassé cette fonction comme un urbexeur trouve la pièce secrète.",
+    "GG, appelle tes potes et montre-leur le trophée.",
+    "Propre. Encore une brique posée, le mur avance.",
+    "TDC valide. La légende continue de grandir."
+  ]
+};
+function setBuddy(pool){
+  var bubble = document.getElementById('buddyBubble');
+  if(bubble) bubble.textContent = pick(String(Date.now()%97) + pool[0], pool);
 }
 
 /* ---------- STEP TABS ---------- */
@@ -1101,9 +2371,11 @@ function placeCodeLine(origIdx, chipEl){
       saveCodeDone();
       renderZones(); renderStat();
       checkFullClear(activeId);
+      setBuddy(BUDDY_LINES.codeWin);
     } else {
       statusEl.className = 'codeStatus show pending';
       statusEl.textContent = '❌ Pas le bon ordre — regarde le vert/rouge, lis les explications, et repush.';
+      setBuddy(BUDDY_LINES.codeLose);
     }
   }
 }
@@ -1158,6 +2430,7 @@ function openModal(id){
   hintShown = false;
   quizAnswered = false;
   switchStep('brief');
+  setBuddy(BUDDY_LINES.open);
 
   var r = RANKS[e.rank];
   document.getElementById('mTag').textContent = r.label;
@@ -1241,6 +2514,7 @@ function answerQuiz(isCorrect, btn, optsBox){
     renderZones(); renderStat(); renderTabs();
     updateToggleBtn();
     checkFullClear(activeId);
+    setBuddy(BUDDY_LINES.quizWin);
   } else {
     btn.classList.add('wrong');
     var koMsgs = [
@@ -1250,6 +2524,7 @@ function answerQuiz(isCorrect, btn, optsBox){
     ];
     fb.textContent = pick(activeId, koMsgs);
     fb.className = 'quizFeedback ko';
+    setBuddy(BUDDY_LINES.quizLose);
   }
 }
 
@@ -1308,7 +2583,160 @@ document.addEventListener('keydown', function(ev){
   if(ev.key === 'Escape'){ closeModal(); document.getElementById('invOverlay').classList.remove('open'); }
 });
 
-renderAll();
+/* ======================================================================
+   COMPTES / SYNCHRO SERVEUR
+   Remplis API_BASE avec l'URL de ton serveur Go une fois déployé sur
+   AlwaysData (ex: "https://tonsouscompte.alwaysdata.net").
+   Tant que c'est vide, le site tourne en local uniquement (comme avant).
+   ====================================================================== */
+var API_BASE = ""; // <-- mets ton URL ici une fois le serveur en ligne
+var CRED_KEY = "zone01_piscine_cred_v1";
+var localOnly = (API_BASE === "");
+var syncTimer = null;
+
+function apiCall(path, body){
+  return fetch(API_BASE + path, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body)
+  }).then(function(res){
+    return res.json().then(function(data){
+      if(!res.ok) throw new Error(data.error || 'erreur serveur');
+      return data;
+    });
+  });
+}
+
+function getCred(){
+  try{
+    var raw = localStorage.getItem(CRED_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function setCred(username, password){
+  try{ localStorage.setItem(CRED_KEY, JSON.stringify({username:username, password:password})); }catch(e){}
+}
+function clearCred(){
+  try{ localStorage.removeItem(CRED_KEY); }catch(e){}
+}
+
+function bundleData(){
+  return JSON.stringify({progress: progress, codeDone: codeDone, cleared: cleared});
+}
+function applyBundle(dataStr){
+  try{
+    var parsed = JSON.parse(dataStr || '{}');
+    progress = parsed.progress || {};
+    codeDone = parsed.codeDone || {};
+    cleared = parsed.cleared || {};
+    saveProgress(); saveCodeDone(); saveCleared();
+  }catch(e){}
+}
+
+function syncToServer(){
+  if(localOnly) return;
+  var cred = getCred();
+  if(!cred) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(function(){
+    apiCall('/api/progress/save', {username: cred.username, password: cred.password, data: bundleData()})
+      .catch(function(){ /* echec silencieux, la sauvegarde locale reste valable */ });
+  }, 600);
+}
+
+// on rebranche les 3 fonctions de sauvegarde pour qu'elles synchronisent aussi le serveur
+var _origSaveProgress = saveProgress, _origSaveCodeDone = saveCodeDone, _origSaveCleared = saveCleared;
+saveProgress = function(){ _origSaveProgress(); syncToServer(); };
+saveCodeDone = function(){ _origSaveCodeDone(); syncToServer(); };
+saveCleared = function(){ _origSaveCleared(); syncToServer(); };
+
+function renderAccountBar(){
+  var bar = document.getElementById('accountBar');
+  var cred = getCred();
+  if(localOnly){
+    bar.innerHTML = 'Mode local (pas de compte configuré) — ta progression reste sur ce PC.';
+  } else if(cred){
+    bar.innerHTML = 'Connecté : <b>' + cred.username + '</b> · <span class="logoutLink" id="logoutLink">changer de compte</span>';
+    var link = document.getElementById('logoutLink');
+    if(link) link.addEventListener('click', function(){ clearCred(); location.reload(); });
+  } else {
+    bar.innerHTML = '';
+  }
+}
+
+function showAuthOverlay(){ document.getElementById('authOverlay').classList.remove('hidden'); }
+function hideAuthOverlay(){ document.getElementById('authOverlay').classList.add('hidden'); }
+
+function switchAuthTab(tab){
+  ['login','signup'].forEach(function(t){
+    document.getElementById('authPane-'+t).style.display = (t===tab) ? 'flex' : 'none';
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.authTab'), function(b){
+    b.classList.toggle('active', b.getAttribute('data-tab') === tab);
+  });
+  document.getElementById('authError').textContent = '';
+}
+Array.prototype.forEach.call(document.querySelectorAll('.authTab'), function(b){
+  b.addEventListener('click', function(){ switchAuthTab(this.getAttribute('data-tab')); });
+});
+
+function bootApp(){
+  hideAuthOverlay();
+  renderAccountBar();
+  renderAll();
+}
+
+document.getElementById('loginSubmit').addEventListener('click', function(){
+  var username = document.getElementById('loginUser').value.trim();
+  var password = document.getElementById('loginPass').value;
+  var errEl = document.getElementById('authError');
+  errEl.textContent = '';
+  apiCall('/api/login', {username: username, password: password}).then(function(){
+    return apiCall('/api/progress/load', {username: username, password: password});
+  }).then(function(res){
+    setCred(username, password);
+    applyBundle(res.data);
+    bootApp();
+  }).catch(function(err){
+    errEl.textContent = '❌ ' + err.message;
+  });
+});
+
+document.getElementById('signupSubmit').addEventListener('click', function(){
+  var username = document.getElementById('signupUser').value.trim();
+  var password = document.getElementById('signupPass').value;
+  var errEl = document.getElementById('authError');
+  errEl.textContent = '';
+  apiCall('/api/signup', {username: username, password: password}).then(function(){
+    setCred(username, password);
+    bootApp();
+  }).catch(function(err){
+    errEl.textContent = '❌ ' + err.message;
+  });
+});
+
+document.getElementById('authSkip').addEventListener('click', function(){
+  localOnly = true;
+  bootApp();
+});
+
+/* ---------- BOOT ---------- */
+if(localOnly){
+  bootApp();
+} else {
+  var cred = getCred();
+  if(cred){
+    apiCall('/api/progress/load', {username: cred.username, password: cred.password}).then(function(res){
+      applyBundle(res.data);
+      bootApp();
+    }).catch(function(){
+      clearCred();
+      showAuthOverlay();
+    });
+  } else {
+    showAuthOverlay();
+  }
+}
 })();
 </script>
 
